@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatCloud", "CatCloud\CatCloud.csproj", "{9DA356C2-B736-4E6C-88CA-CBC6CCFAF36A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatCloud.Core", "CatCloud.Core\CatCloud.Core.csproj", "{72975215-096A-4CE7-AE4B-AC4F467CDA03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatCloud.Infrastructure", "CatCloud.Infrastructure\CatCloud.Infrastructure.csproj", "{BBC04B0F-3DC2-4038-BB04-F30E3E14C54D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatCloud.Application", "CatCloud.Application\CatCloud.Application.csproj", "{BE6894B3-24D5-44A7-A495-6D9B32850B3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DA356C2-B736-4E6C-88CA-CBC6CCFAF36A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA356C2-B736-4E6C-88CA-CBC6CCFAF36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA356C2-B736-4E6C-88CA-CBC6CCFAF36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA356C2-B736-4E6C-88CA-CBC6CCFAF36A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72975215-096A-4CE7-AE4B-AC4F467CDA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72975215-096A-4CE7-AE4B-AC4F467CDA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72975215-096A-4CE7-AE4B-AC4F467CDA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72975215-096A-4CE7-AE4B-AC4F467CDA03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBC04B0F-3DC2-4038-BB04-F30E3E14C54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBC04B0F-3DC2-4038-BB04-F30E3E14C54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBC04B0F-3DC2-4038-BB04-F30E3E14C54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBC04B0F-3DC2-4038-BB04-F30E3E14C54D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6894B3-24D5-44A7-A495-6D9B32850B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6894B3-24D5-44A7-A495-6D9B32850B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6894B3-24D5-44A7-A495-6D9B32850B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6894B3-24D5-44A7-A495-6D9B32850B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

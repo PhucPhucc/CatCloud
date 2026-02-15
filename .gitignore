@@ -1,0 +1,57 @@
+################################
+# .NET / ASP.NET Core
+################################
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+################################
+# Rider / Visual Studio
+################################
+.vs/
+.idea/
+*.suo
+*.user
+*.DotSettings.user
+
+################################
+# App settings (local / secret)
+################################
+appsettings.Development.json
+appsettings.Local.json
+.env
+.env.*
+
+################################
+# Runtime / storage (TUYỆT ĐỐI KHÔNG COMMIT)
+################################
+cloud-storage/
+uploads/
+storage/
+
+################################
+# Database volumes
+################################
+database/**/pgdata/
+database/**/data/
+
+################################
+# Logs
+################################
+*.log
+logs/
+Logs/
+
+################################
+# Frontend
+################################
+node_modules/
+dist/
+.vite/
+
+################################
+# OS
+################################
+.DS_Store
+Thumbs.db

@@ -1,0 +1,6 @@
+@CatCloud_HostAddress = http://localhost:5225
+
+GET {{CatCloud_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

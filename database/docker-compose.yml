@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: cloud_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: CatCloudDB
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database/pgdata:/var/lib/postgresql/data
