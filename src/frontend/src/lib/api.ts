@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/store/authStore";
 
 // 1. Cấu hình instance
@@ -7,7 +7,7 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // <--- QUAN TRỌNG NHẤT: Để gửi/nhận Cookie HttpOnly
+  withCredentials: true,
 });
 
 // 2. Request Interceptor: Gắn Access Token (giữ nguyên)
@@ -21,37 +21,79 @@ api.interceptors.request.use((config) => {
 });
 
 // 3. Response Interceptor: Xử lý Refresh Token tự động
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+interface FailedRequest {
+  resolve: (token: string) => void;
+  reject: (error: AxiosError) => void;
+}
 
-    // Nếu gặp lỗi 401 (Hết hạn Access Token)
+let isRefreshing = false;
+let failedQueue: FailedRequest[] = [];
+
+const processQueue = (error: AxiosError | null, token: string | null) => {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) reject(error);
+    else if (token) resolve(token);
+  });
+
+  failedQueue = [];
+};
+
+api.interceptors.response.use(
+  (res) => res,
+  async (error: AxiosError) => {
+    const originalRequest = error.config as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
+
+    const isRefreshRequest = originalRequest.url?.includes("/auth/refresh");
+
+    // ❌ Nếu refresh fail → logout ngay
+    if (error.response?.status === 401 && isRefreshRequest) {
+      useAuthStore.getState().logout();
+      window.location.href = "/login";
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Đánh dấu đã thử refresh
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        return new Promise<string>((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then((token) => {
+          originalRequest.headers = {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${token}`,
+          };
+          return api(originalRequest);
+        });
+      }
+
+      isRefreshing = true;
 
       try {
-        // Gọi API refresh
-        // LƯU Ý: Không cần gửi body chứa refreshToken nữa!
-        // Cookie HttpOnly sẽ tự động đi kèm request này.
-        const res = await api.post("/auth/refresh");
-
-        // API trả về AccessToken mới (còn RefreshToken mới thì nằm trong Cookie rồi)
+        const res = await api.post<{ accessToken: string }>("/auth/refresh");
         const { accessToken } = res.data;
 
-        // Lưu AccessToken mới vào Store
         useAuthStore.getState().setToken(accessToken);
+        processQueue(null, accessToken);
 
-        // Gắn token mới vào header request cũ và gọi lại
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        originalRequest.headers = {
+          ...originalRequest.headers,
+          Authorization: `Bearer ${accessToken}`,
+        };
+
         return api(originalRequest);
-      } catch (refreshError) {
-        // Nếu refresh thất bại (Cookie hết hạn hoặc không hợp lệ) -> Logout
+      } catch (err) {
+        processQueue(err as AxiosError, null);
         useAuthStore.getState().logout();
         window.location.href = "/login";
-        return Promise.reject(refreshError);
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
       }
     }
+
     return Promise.reject(error);
   },
 );

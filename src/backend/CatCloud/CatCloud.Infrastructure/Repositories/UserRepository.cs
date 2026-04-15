@@ -22,6 +22,13 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetUserByIdAsync(Guid userId)
     {
         return await _context.Users.FindAsync(userId);
+
+    }
+
+    public async Task<string?> GetMe(Guid userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        return user?.Username;
     }
 
     public async Task<User?> GetUserByUsernameAsync(string username)
