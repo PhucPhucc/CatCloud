@@ -32,3 +32,10 @@ Xây dựng hệ thống lưu trữ đám mây cá nhân (tương tự Google Dr
 
 - **Private Git Server:** Tích hợp Gitea hoặc LibGit2Sharp.
 - **Media Streaming:** Xem video trực tiếp không cần tải về.
+
+
+
+cloud-stogare
+-shared
+-temp
+-users
